@@ -10,7 +10,7 @@ from quiz import models as QMODEL
 from teacher import models as TMODEL
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 import openpyxl
-from quiz.models import Passage,Email,LongPassage,Instructions
+from quiz.models import Passage,Email,LongPassage,Instructions,Listening
 
 
 
@@ -146,20 +146,22 @@ def start_exam_view(request,pk):
     page = request.GET.get('page')
     paged_questions = paginator.get_page(page)
     longpassages=LongPassage.objects.all()
+    listenings=Listening.objects.all()
+    
     if pk == 2:
            response= render(request,'student/start_exam.html',{'course':course,'questions':paged_questions,'passages':passages})
     if pk == 3:
            response= render(request,'student/start_exam.html',{'course':course,'questions':paged_questions,'longpassages':longpassages})
     if pk == 4:
            response= render(request,'student/start_exam.html',{'course':course,'questions':paged_questions,'emails':emails})
-
+    if pk == 5:
+           response= render(request,'student/start_exam.html',{'course':course,'questions':paged_questions,'listenings':listenings})
+    if pk == 1:
+        response= render(request,'student/start_exam.html',{'course':course,'questions':paged_questions})
+        response.set_cookie('course_id',course.id)
 
     if request.method=='POST':
         pass
-    if pk == 1:
-
-        response= render(request,'student/start_exam.html',{'course':course,'questions':paged_questions})
-    response.set_cookie('course_id',course.id)
     return response
 
 @login_required(login_url='studentlogin')

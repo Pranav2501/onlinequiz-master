@@ -17,7 +17,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from quiz.models import Question,Passage
 import os
-from gtts import gTTS
+
 from playsound import playsound
 import shutil
 import openpyxl

@@ -38,67 +38,112 @@
 </head>
 
 <body>
-<div class="jumbotron my-4">
+  
 
-  <form class="form" autocomplete="off" onsubmit="return saveAns()"  action="/student/calculate-marks" method="POST">
-    {% csrf_token %}
+<div class="jumbotron my-4">        
+        
+  
     <h1 style="text-align: center;">{{course.course_name}}</h1>
     
     
       {% for k in longpassages %}
-        <div class="main-content" style="overflow:scroll">
-          <h3 class="text-info">{{k.longpassage_qs}}</h3>
+        <div class="main-content" style="overflow:scroll;width:1000px;margin:20px 0px; height:400px">
+          <h3 class="text-info" style="font-size:large">{{k.longpassage_qs}}</h3>
+          
         </div>
       {% endfor %}
-      
-      {% for k in emails %}
-      <div class="main-content" style="overflow:scroll">
-        <h3 class="text-info">{{k.email_qs}}</h3>
-      </div>
-       
-      {% endfor %}
-      
+      {%if emails %}
+        <div class="main-content" style="overflow:scroll;width:1000px;margin:20px 0px; height:400px">
 
+      
+        
+        {% for k in emails %}
 
-    
-    <div class="main-content" style="overflow:scroll">
+          <h3 class="text-info" style="font-size:small">{{k.email_qs}}</h3>
+
+        {% endfor %}
+        </div>
+      {% endif %}
+      {% if listenings %}
+            <p class="lead text-light mt-4" style="text-align:left;">Select Voice</p>
+          
+            <!-- Select Menu for Voice -->
+            <select id="voices" class="form-select bg-secondary text-light"></select>
+        
+            <!-- Range Slliders for Volume, Rate & Pitch -->
+            <div class="d-flex mt-4 text-light">
+              <div>
+                <p class="lead" style="text-align:left;">Volume</p>
+                <input type="range" min="0" max="1" value="1" step="0.1" id="volume" />
+                <span id="volume-label" class="ms-2">1</span>
+              </div>
+              <div class="mx-5">
+                <p class="lead" style="text-align:left;">Rate</p>
+                <input type="range" min="0.1" max="10" value="1" id="rate" step="0.1" />
+                <span id="rate-label" class="ms-2">1</span>
+              </div>
+              <div>
+                <p class="lead" style="text-align:left;">Pitch</p>
+                <input type="range" min="0" max="2" value="1" step="0.1" id="pitch" />
+                <span id="pitch-label" class="ms-2">1</span>
+              </div>
+            </div>
+        
+            
+        
+            <!-- Control Buttons -->
+            <div class="mb-5">
+              <button id="start" class="btn btn-success mt-5 me-3">Start</button>
+              <button id="pause" class="btn btn-warning mt-5 me-3">Pause</button>
+              <button id="resume" class="btn btn-info mt-5 me-3">Resume</button>
+              <button id="cancel" class="btn btn-danger mt-5 me-3">Cancel</button>
+            </div>
+      {% for k in listenings %}
+            <textarea name="hide" style="display:none;" class="form-control bg-dark text-light mt-5" cols="30" rows="10" placeholder="Type here...">{{k.listening_qs}}</textarea>
+        {% endfor %}
+      {% endif %}
+      
+    <form class="form" autocomplete="off" onsubmit="return saveAns()"  action="/student/calculate-marks" method="POST">
+    {% csrf_token %}
+    <div class="main-content" style="overflow:scroll;margin: 20px 0px;width:1000px ;height:300px">
     {% for q in questions %}
   
 
    
    
     
-    <h3 class="text-info">{{ forloop.counter }}.{{q.question}}</h3><h4 style="text-align: right;">[Marks {{q.marks}}]</h4>
+    <h3 class="text-info" style="font-size:large;text-align:left;margin-left: 20px;color:rgb(7, 46, 85)">{{ forloop.counter }}.{{q.question}}</h3><h4 style="text-align: right;">[Marks {{q.marks}}]</h4>
+    <textarea name="hide" style="display:none;" class="form-control bg-dark text-light mt-5" cols="30" rows="10" placeholder="Type here...">{{q.question}}</textarea>
         <input type="hidden" name="csrfmiddlewaretoken" value="C24rUotmdHawVQJL3KrqiWxvti8UffOFYUc8TRbZtLt36AVLdP3jbkzUVe3beRAa">
         
         
-          <div class="form-check mx-4">
+          <div class="form-check mx-4" style="font-size: small;text-align:left">
             <input class="form-check-input" type="radio" name="{{ forloop.counter }}" id="{{q.option1}}" value="Option1">
-            <label class="form-check-label" for="option1">
+            <label class="form-check-label" style="margin:-130px"for="option1">
               {{q.option1}}
             </label>
           </div>
 
         
-          <div class="form-check mx-4">
-            <input class="form-check-input" type="radio" name="{{ forloop.counter }}" id="{{q.option2}}" value="Option2">
-            <label class="form-check-label" for="option2">
+          <div class="form-check mx-4" style="font-size: small;">
+            <input class="form-check-input"  type="radio" name="{{ forloop.counter }}" id="{{q.option2}}" value="Option2">
+            <label class="form-check-label" style="margin:-130px"for="option2">
               {{q.option2}}
             </label>
           </div>
 
         
-          <div class="form-check mx-4">
+          <div class="form-check mx-4" style="font-size: small">
             <input class="form-check-input" type="radio" name="{{ forloop.counter }}" id="{{q.option3}}" value="Option3">
-            <label class="form-check-label" for="option3">
+            <label class="form-check-label" style="margin:-130px;" for="option3">
               {{q.option3}}
             </label>
           </div>
 
         
-          <div class="form-check mx-4">
+          <div class="form-check mx-4" style="font-size: small">
             <input class="form-check-input" type="radio" name="{{ forloop.counter }}" id="{{q.option4}}" value="Option4">
-            <label class="form-check-label" for="option4">
+            <label class="form-check-label" style="margin:-130px"for="option4">
               {{q.option4}}
             </label>
           </div>
@@ -153,6 +198,9 @@
     
             </ul>
           {% endif %}
+          
+        
+         
           <script> 
             function saveAns(){  
         
@@ -175,6 +223,90 @@
         }
         
         </script> 
+        <script >
+          // Initialize new SpeechSynthesisUtterance object
+      let speech = new SpeechSynthesisUtterance();
+      
+      // Set Speech Language
+      speech.lang = "en";
+      
+      let voices = []; // global array of available voices
+      
+      window.speechSynthesis.onvoiceschanged = () => {
+        // Get List of Voices
+        voices = window.speechSynthesis.getVoices();
+      
+        // Initially set the First Voice in the Array.
+        speech.voice = voices[0];
+      
+        // Set the Voice Select List. (Set the Index as the value, which we'll use later when the user updates the Voice using the Select Menu.)
+        let voiceSelect = document.querySelector("#voices");
+        voices.forEach((voice, i) => (voiceSelect.options[i] = new Option(voice.name, i)));
+      };
+      
+      document.querySelector("#rate").addEventListener("input", () => {
+        // Get rate Value from the input
+        const rate = document.querySelector("#rate").value;
+      
+        // Set rate property of the SpeechSynthesisUtterance instance
+        speech.rate = rate;
+      
+        // Update the rate label
+        document.querySelector("#rate-label").innerHTML = rate;
+      });
+      
+      document.querySelector("#volume").addEventListener("input", () => {
+        // Get volume Value from the input
+        const volume = document.querySelector("#volume").value;
+      
+        // Set volume property of the SpeechSynthesisUtterance instance
+        speech.volume = volume;
+      
+        // Update the volume label
+        document.querySelector("#volume-label").innerHTML = volume;
+      });
+      
+      document.querySelector("#pitch").addEventListener("input", () => {
+        // Get pitch Value from the input
+        const pitch = document.querySelector("#pitch").value;
+      
+        // Set pitch property of the SpeechSynthesisUtterance instance
+        speech.pitch = pitch;
+      
+        // Update the pitch label
+        document.querySelector("#pitch-label").innerHTML = pitch;
+      });
+      
+      document.querySelector("#voices").addEventListener("change", () => {
+        // On Voice change, use the value of the select menu (which is the index of the voice in the global voice array)
+        speech.voice = voices[document.querySelector("#voices").value];
+      });
+      
+      document.querySelector("#start").addEventListener("click", () => {
+        // Set the text property with the value of the textarea
+        speech.text = document.querySelector("textarea").value;
+      
+        // Start Speaking
+        window.speechSynthesis.speak(speech);
+      });
+      
+      document.querySelector("#pause").addEventListener("click", () => {
+        // Pause the speechSynthesis instance
+        window.speechSynthesis.pause();
+      });
+      
+      document.querySelector("#resume").addEventListener("click", () => {
+        // Resume the paused speechSynthesis instance
+        window.speechSynthesis.resume();
+      });
+      
+      document.querySelector("#cancel").addEventListener("click", () => {
+        // Cancel the speechSynthesis instance
+        window.speechSynthesis.cancel();
+      });
+      
+      </script>
+        
   
     
   

@@ -17,7 +17,8 @@ class Email(models.Model):
 class LongPassage(models.Model):
     longpassage_qs=models.CharField(max_length=3000000)
     
-
+class Listening(models.Model):
+    listening_qs=models.CharField(max_length=3000000)
 
   
 

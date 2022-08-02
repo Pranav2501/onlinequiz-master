@@ -24,21 +24,21 @@ class QuestionForm(forms.ModelForm):
         model=models.Question
         fields=['marks','question','option1','option2','option3','option4','answer']
         widgets = {
-            'question': forms.Textarea(attrs={'rows': 3, 'cols': 50})
+            'question': forms.Textarea(attrs={'rows': 300, 'cols': 500})
         }
 class PassageForm(forms.ModelForm):
     class Meta:
         model=models.Passage
         fields=['passage_qs']
         widgets = {
-            'passage_qs': forms.Textarea(attrs={'rows': 3, 'cols' : 50})
+            'passage_qs': forms.Textarea(attrs={'rows': 300, 'cols' : 500})
         }
 class LongPassageForm(forms.ModelForm):
     class Meta:
         model=models.LongPassage
         fields=['longpassage_qs']
         widgets = {
-            'longpassage_qs': forms.Textarea(attrs={'rows': 3, 'cols' : 50})
+            'longpassage_qs': forms.Textarea(attrs={'rows': 300, 'cols' : 5000})
         }
 
 class Email(forms.ModelForm):
@@ -46,5 +46,5 @@ class Email(forms.ModelForm):
         model=models.Email
         fields=['email_qs']
         widgets = {
-            'email_qs': forms.Textarea(attrs={'rows': 3, 'cols' : 50})
+            'email_qs': forms.Textarea(attrs={'rows': 300, 'cols' : 500})
         }
