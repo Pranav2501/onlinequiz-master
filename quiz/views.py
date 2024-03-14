@@ -348,6 +348,7 @@ def aboutus_view(request):
             
             if i[6] == i[3]:
                 q=Question.objects.create(marks=i[0],question=i[1],option1=i[2],option2=i[3],option3=i[4],option4=i[5],answer='Option2',mp3file="question"+str(k)+".mp3",is_passage=x,is_longpassage=y,is_email=z)
+                
 
             if i[6] == i[4]:
                 q=Question.objects.create(marks=i[0],question=i[1],option1=i[2],option2=i[3],option3=i[4],option4=i[5],answer='Option3',mp3file="question"+str(k)+".mp3",is_passage=x,is_longpassage=y,is_email=z)

@@ -10,7 +10,10 @@ from quiz import models as QMODEL
 from teacher import models as TMODEL
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 import openpyxl
+import random
 from quiz.models import Passage,Email,LongPassage,Instructions,Listening
+from random import randint,shuffle
+
 
 
 
@@ -139,7 +142,11 @@ def take_exam_view(request,pk):
 @user_passes_test(is_student)
 def start_exam_view(request,pk):
     course=QMODEL.Course.objects.get(id=pk)
+    i= randint(0,QMODEL.Question.objects.count()-1)
     questions=QMODEL.Question.objects.all().filter(course=course)
+    questions = random.sample(list(questions),questions.count()-1)
+    
+
     passages=Passage.objects.all()
     emails=Email.objects.all()
     paginator = Paginator(questions, 1)
@@ -157,7 +164,7 @@ def start_exam_view(request,pk):
     if pk == 5:
            response= render(request,'student/start_exam.html',{'course':course,'questions':paged_questions,'listenings':listenings})
     if pk == 1:
-        response= render(request,'student/start_exam.html',{'course':course,'questions':paged_questions})
+        response= render(request,'student/start_exam.html',{'course':course,'questions':random.shuffle(paged_questions)})
         response.set_cookie('course_id',course.id)
 
     if request.method=='POST':

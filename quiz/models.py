@@ -1,7 +1,10 @@
 from django.db import models
 
 from student.models import Student
+class Exam(models.Model):
+    exam_name = models.CharField(max_length=2000,default=True)
 class Course(models.Model):
+   exanmname=models.ForeignKey(Exam,on_delete=models.CASCADE,default=True)
    course_name = models.CharField(max_length=50,default=True)
    question_number = models.PositiveIntegerField()
    total_marks = models.PositiveIntegerField()
@@ -41,7 +44,7 @@ class Question(models.Model):
   
 
 
-    mp3file=models.FileField(default=True)
+    mp3file=models.FileField(default=False)
 
 class Instructions(models.Model):
     course=models.ForeignKey(Course,on_delete=models.CASCADE,default=True)
